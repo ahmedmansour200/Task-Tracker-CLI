@@ -16,44 +16,38 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         String FILE_PATH = "data.json";
-//        try {
-//            // Read the JSON file using a BufferedReader
-//            BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH));
-//            JsonObject jsonObject = JsonParser.parseReader(reader).getAsJsonObject();
-//            reader.close();
-//
-//            // Get the "todo" array and add the new item
-//            JsonArray todoArray = jsonObject.getAsJsonArray("todo");
-//
-//
-//
-//            System.out.println("New task added successfully.");
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
         Scanner sc = new Scanner(System.in);
         boolean running = true;
         do {
             System.out.println("\n=== Task Tracker CLI ===");
-            System.out.println("1 : Add Todo");
-            System.out.println("2 : Show All Todo");
-            System.out.println("3 : Show All Todo Of Progress");
-            System.out.println("4 : Show All Todo Of done");
-            System.out.println("5 : Show All Todo Of not done");
-            System.out.println("6 : Update Todo");
-            System.out.println("7 : Delete Todo");
+            System.out.println("1 : Add New Task");
+            System.out.println("2 : Show All Task");
+            System.out.println("3 : Show All Task Of Progress");
+            System.out.println("4 : Show All Task Of done");
+            System.out.println("5 : Show All Task Of not done");
+            System.out.println("6 : Update Task");
+            System.out.println("7 : Delete Task");
             System.out.println("8 : Exit");
             System.out.print("Choose an option: ");
             String action = sc.nextLine();
             switch (action) {
                 case "1":
-                    System.out.println("the description:");
+                    System.out.println("Add new description:");
                     String description = sc.nextLine();
-                    System.out.println("The Status=>  1 : todo , 2 : in-progress , 3 : done ");
-                    int statusInput = Integer.parseInt(sc.nextLine());
-                    String status = statusInput == 1 ? "todo" : statusInput == 2 ? "in-progress" : "done";
+                    while (description.isEmpty()){
+                        System.out.println("Description cannot be empty. Please enter a valid description:");
+                        description = sc.nextLine();
+                    }
+                    System.out.println("Add The Status=>  1 : todo , 2 : in-progress , 3 : done ");
+                    String statusInput = sc.nextLine();
+                    while (statusInput.isEmpty()){
+                        System.out.println("Status cannot be empty. Please enter a valid status:");
+                        statusInput = sc.nextLine();
+                    }while (statusInput.charAt(0) < '1' || statusInput.charAt(0) > '3' || statusInput.length() > 1){
+                        System.out.println("Invalid status. Please enter 1, 2, or 3.");
+                        statusInput = sc.nextLine();
+                    }
+                    String status = statusInput.equals("1") ? "todo" : statusInput.equals("2") ? "in-progress" : "done";
                     Task myTask = new Task(description, status, new Date(), new Date());
                     try {
                         BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH));
@@ -61,7 +55,6 @@ public class Main {
                         JsonObject jsonObject = JsonParser.parseReader(reader).getAsJsonObject();
                         JsonArray todoArray = jsonObject.getAsJsonArray("todo");
                         todoArray.add(new Gson().toJsonTree(myTask));
-                        System.out.println(todoArray);
                         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
                             Gson gson = new Gson();
                             gson.toJson(jsonObject, writer);
@@ -124,16 +117,23 @@ public class Main {
                                     JsonObject taskToUpdate = todoArray.get(updateIndex - 1).getAsJsonObject();
                                     System.out.println("Enter new description (leave blank to keep current):");
                                     String newDescription = sc.nextLine();
+                                    while (newDescription.isEmpty()){
+                                        System.out.println("Description cannot be empty. Please enter a valid description:");
+                                        newDescription = sc.nextLine();
+                                    }
                                     System.out.println("Enter new status (1: todo, 2: in-progress, 3: done) (leave blank to keep current):");
                                     String statusInputStr = sc.nextLine();
-                                    if (!newDescription.isEmpty()) {
-                                        taskToUpdate.addProperty("description", newDescription);
+                                    while (statusInputStr.isEmpty()){
+                                        System.out.println("Status cannot be empty. Please enter a valid status:");
+                                        statusInputStr = sc.nextLine();
                                     }
-                                    if (!statusInputStr.isEmpty()) {
-                                        int statusInputInt = Integer.parseInt(statusInputStr);
-                                        String newStatus = statusInputInt == 1 ? "todo" : statusInputInt == 2 ? "in-progress" : "done";
+                                        while (statusInputStr.charAt(0) < '1' || statusInputStr.charAt(0) > '3' || statusInputStr.length() > 1){
+                                            System.out.println("Invalid status. Please enter 1, 2, or 3.");
+                                            statusInputStr = sc.nextLine();
+                                        }
+                                        String newStatus = statusInputStr.equals("1") ? "todo" : statusInputStr.equals("2") ? "in-progress" : "done";
                                         taskToUpdate.addProperty("status", newStatus);
-                                    }
+
                                     taskToUpdate.addProperty("updateAt", new Date().toString());
                                     try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
                                         Gson gson = new Gson();
