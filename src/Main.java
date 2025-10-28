@@ -2,6 +2,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonArray;
+import helper.Helper;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -78,7 +79,7 @@ public class Main {
                             String statusStr = taskObj.get("status").getAsString();
                             String createdAtStr = taskObj.get("createdAt").getAsString();
                             String updateAtStr = taskObj.get("updateAt").getAsString().equals(taskObj.get("createdAt").getAsString()) ? " not update" : taskObj.get("updateAt").getAsString();
-                            printTask(descriptionStr, statusStr, createdAtStr, updateAtStr);
+                            Helper.printTask(descriptionStr, statusStr, createdAtStr, updateAtStr);
                             }
                         reader.close();
                     } catch (IOException e) {
@@ -87,16 +88,16 @@ public class Main {
                         break;
                         case "3":
                             System.out.println("\n=== Tasks In Progress ===");
-                            readerAndPrintStatus("in-progress" , FILE_PATH);
+                            Helper.readerAndPrintStatus("in-progress" , FILE_PATH);
                             break;
 
                         case "4":
                             System.out.println("\n=== Done Tasks ===");
-                            readerAndPrintStatus("done" , FILE_PATH);
+                            Helper.readerAndPrintStatus("done" , FILE_PATH);
                             break;
                         case "5":
                             System.out.println("\n=== Not Done Tasks ===");
-                            readerAndPrintStatus("todo" , FILE_PATH);
+                            Helper.readerAndPrintStatus("todo" , FILE_PATH);
                             break;
                         case "6":
                             System.out.println("\n=== Update Tasks ===");
@@ -190,30 +191,30 @@ public class Main {
         }while (running) ;
             sc.close();
         }
-    public static void readerAndPrintStatus(String status , String filePath) {
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(filePath));
-            JsonObject jsonObject = JsonParser.parseReader(reader).getAsJsonObject();
-            JsonArray todoArray = jsonObject.getAsJsonArray("todo");
-            for (int i = 0; i < todoArray.size(); i++) {
-                JsonObject taskObj = todoArray.get(i).getAsJsonObject();
-                    String descriptionStr = taskObj.get("description").getAsString();
-                    String statusStr = taskObj.get("status").getAsString();
-                    String createdAtStr = taskObj.get("createdAt").getAsString();
-                    String updateAtStr = taskObj.get("updateAt").getAsString().equals(taskObj.get("createdAt").getAsString()) ? " not update" : taskObj.get("updateAt").getAsString();
-                if (taskObj.get("status").getAsString().equals(status)) {
-                    printTask(descriptionStr, statusStr, createdAtStr, updateAtStr);
-                }
-            }
-            reader.close();
-        } catch (IOException e) {
-            e.getMessage();
-        }
-    }
-    public static void printTask (String description, String status, String createdAt , String updateAt) {
-        System.out.println( " description : " + description + " status : " +  status +" createdAt : " + createdAt +
-                        " updateAt : " + updateAt );
-    }
+//    public static void readerAndPrintStatus(String status , String filePath) {
+//        try {
+//            BufferedReader reader = new BufferedReader(new FileReader(filePath));
+//            JsonObject jsonObject = JsonParser.parseReader(reader).getAsJsonObject();
+//            JsonArray todoArray = jsonObject.getAsJsonArray("todo");
+//            for (int i = 0; i < todoArray.size(); i++) {
+//                JsonObject taskObj = todoArray.get(i).getAsJsonObject();
+//                    String descriptionStr = taskObj.get("description").getAsString();
+//                    String statusStr = taskObj.get("status").getAsString();
+//                    String createdAtStr = taskObj.get("createdAt").getAsString();
+//                    String updateAtStr = taskObj.get("updateAt").getAsString().equals(taskObj.get("createdAt").getAsString()) ? " not update" : taskObj.get("updateAt").getAsString();
+//                if (taskObj.get("status").getAsString().equals(status)) {
+//                    printTask(descriptionStr, statusStr, createdAtStr, updateAtStr);
+//                }
+//            }
+//            reader.close();
+//        } catch (IOException e) {
+//            e.getMessage();
+//        }
+//    }
+//    public static void printTask (String description, String status, String createdAt , String updateAt) {
+//        System.out.println( " description : " + description + " status : " +  status +" createdAt : " + createdAt +
+//                        " updateAt : " + updateAt );
+//    }
     }
 
 
