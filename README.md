@@ -2,8 +2,6 @@
 
 A simple command-line task tracker written in Java. It stores tasks in a local `data.json` file and provides an interactive menu to add, list, filter, update, and delete tasks.
 
-This README explains how to build and run the project, what each menu option does, the JSON storage format, common troubleshooting steps, and example sessions.
-
 ---
 Project URL: https://roadmap.sh/projects/task-tracker
 ## Contents
@@ -185,19 +183,3 @@ Notes:
   - The helper uses simple ANSI escape codes for colored terminal output. Windows 10+ Command Prompt and most terminals support these, but older terminals may show escape sequences instead.
 
 ---
-
-## Contributing / Notes
-- This is a small educational CLI. Improvements you could make:
-  - Add search by description or id
-  - Provide command-line flags (non-interactive mode) to add/list tasks
-  - Store tasks in a more structured DB or add timestamps in ISO format
-  - Add unit tests
-
-If you'd like, I can:
-- Add a simple non-interactive command-line interface (e.g., `java -jar task-cli.jar add "desc" done`)
-- Convert timestamps to ISO-8601
-- Add a small set of unit tests
-
----
-
-If anything in this README doesn't match the behaviour you see, tell me what output or menu you have and I'll update the documentation.
