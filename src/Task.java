@@ -4,11 +4,11 @@ import java.util.UUID;
 public class Task {
     private String id;
     private String description;
-    private String status;
+    private Status status;
     private Date createdAt;
     private Date updateAt;
 
-    public Task(String description , String status , Date createdAt, Date updateAt ) {
+    public Task(String description , Status status , Date createdAt, Date updateAt ) {
         this.id = UUID.randomUUID().toString();
         this.description = description;
         this.status = status;
@@ -21,26 +21,10 @@ public class Task {
     public void setDescription(String description) {
         this.description = description;
     }
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
-    public void setUpdateAt(Date updateAt) {
-        this.updateAt = updateAt;
-    }
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
-    }
-    public Date getUpdateAt() {
-        return updateAt;
-    }
-    public void printTask () {
-        System.out.println("Task id : " + id + " description : " + description + " status : " + status +
-                " createdAt : " + createdAt );
     }
 }

@@ -48,7 +48,7 @@ public class Main {
                         System.out.println("Invalid status. Please enter 1, 2, or 3.");
                         statusInput = sc.nextLine();
                     }
-                    String status = statusInput.equals("1") ? "todo" : statusInput.equals("2") ? "in-progress" : "done";
+                    Status status = statusInput.equals("1") ? Status.TODO : statusInput.equals("2") ? Status.IN_PROGRESS : Status.DONE;
                     Task myTask = new Task(description, status, new Date(), new Date());
                     try {
                         BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH));
@@ -191,30 +191,6 @@ public class Main {
         }while (running) ;
             sc.close();
         }
-//    public static void readerAndPrintStatus(String status , String filePath) {
-//        try {
-//            BufferedReader reader = new BufferedReader(new FileReader(filePath));
-//            JsonObject jsonObject = JsonParser.parseReader(reader).getAsJsonObject();
-//            JsonArray todoArray = jsonObject.getAsJsonArray("todo");
-//            for (int i = 0; i < todoArray.size(); i++) {
-//                JsonObject taskObj = todoArray.get(i).getAsJsonObject();
-//                    String descriptionStr = taskObj.get("description").getAsString();
-//                    String statusStr = taskObj.get("status").getAsString();
-//                    String createdAtStr = taskObj.get("createdAt").getAsString();
-//                    String updateAtStr = taskObj.get("updateAt").getAsString().equals(taskObj.get("createdAt").getAsString()) ? " not update" : taskObj.get("updateAt").getAsString();
-//                if (taskObj.get("status").getAsString().equals(status)) {
-//                    printTask(descriptionStr, statusStr, createdAtStr, updateAtStr);
-//                }
-//            }
-//            reader.close();
-//        } catch (IOException e) {
-//            e.getMessage();
-//        }
-//    }
-//    public static void printTask (String description, String status, String createdAt , String updateAt) {
-//        System.out.println( " description : " + description + " status : " +  status +" createdAt : " + createdAt +
-//                        " updateAt : " + updateAt );
-//    }
     }
 
 
